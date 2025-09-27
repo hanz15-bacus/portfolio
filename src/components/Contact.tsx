@@ -31,14 +31,14 @@ const Contact = () => {
     {
       icon: Github,
       label: "GitHub",
-      href: "https://github.com/johndoe",
-      username: "johndoe"
+      href: "https://github.com/hanz15-bacus",
+      username: "hanz15-bacus"
     },
     {
       icon: Linkedin,
       label: "LinkedIn",
-      href: "https://linkedin.com/in/johndoe",
-      username: "johndoe"
+      href: "https://www.linkedin.com/in/hanz-chester-vicada-bacus-77aba8357/",
+      username: "Hanz Chester V. Bacus"
     }
   ];
 

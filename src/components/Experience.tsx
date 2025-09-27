@@ -5,9 +5,9 @@ import { CalendarDays, MapPin, Building } from "lucide-react";
 const Experience = () => {
   const experiences = [
     {
-      title: "Software Engineering Intern",
-      company: "Tech Startup Inc.",
-      location: "San Francisco, CA",
+      title: "Full-Stack Developer Intern",
+      company: "88WebForge Solutions",
+      location: "Cebu City, Philippines",
       period: "Jun 2024 - Aug 2024",
       type: "Internship",
       description: [
@@ -16,52 +16,27 @@ const Experience = () => {
         "Participated in code reviews and learned industry best practices",
         "Contributed to improving application performance by 20%"
       ],
-      technologies: ["React", "TypeScript", "Node.js", "AWS"]
+      technologies: ["React", "TypeScript", "Django", "PostgreSQL", "Git"]
     },
-    {
-      title: "Teaching Assistant",
-      company: "University Computer Science Department",
-      location: "University Campus",
-      period: "Sep 2023 - Present",
-      type: "Part-time",
-      description: [
-        "Assist students in CS101 and CS201 courses with programming concepts",
-        "Hold weekly office hours and conduct review sessions",
-        "Grade assignments and provide constructive feedback",
-        "Help improve student understanding of algorithms and data structures"
-      ],
-      technologies: ["Java", "Python", "C++", "Algorithms"]
-    },
-    {
-      title: "Freelance Web Developer",
-      company: "Self-Employed",
-      location: "Remote",
-      period: "Jan 2023 - May 2024",
-      type: "Freelance",
-      description: [
-        "Built responsive websites for small businesses and local organizations",
-        "Worked directly with clients to understand requirements and deliver solutions",
-        "Managed project timelines and maintained client relationships",
-        "Delivered 5+ successful projects with 100% client satisfaction"
-      ],
-      technologies: ["HTML", "CSS", "JavaScript", "WordPress", "PHP"]
-    }
+
   ];
 
   const education = [
     {
       degree: "Bachelor of Science in Computer Science",
-      school: "University Name",
+      school: "Cebu Institute of Technology - University",
       location: "City, State",
       period: "Aug 2022 - May 2026",
-      gpa: "3.8/4.0",
+      gpa: "4.0 - 4.3",
       coursework: [
         "Data Structures & Algorithms",
+        "Design & Analysis of Algorithms",
         "Software Engineering",
-        "Database Systems",
-        "Machine Learning",
-        "Computer Networks",
-        "Operating Systems"
+        "Information Management 1 & 2",
+        "Applied AI",
+        "Intelligent Systems",
+        "Operating Systems",
+        "Automata Theory",
       ]
     }
   ];

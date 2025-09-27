@@ -45,7 +45,7 @@ const Navigation = () => {
             onClick={() => scrollToSection("#")}
             className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent hover:opacity-80 transition-opacity"
           >
-            John Doe
+            Hanz Chester V. Bacus
           </button>
 
           {/* Desktop Navigation */}
