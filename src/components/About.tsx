@@ -27,8 +27,8 @@ const About = () => {
   ];
 
   const technologies = [
-    "JavaScript", "TypeScript", "Python", "Java", "React", "Node.js",
-    "PostgreSQL", "MongoDB", "AWS", "Docker", "Git", 
+    "JavaScript", "TypeScript", "Python", "C#", "Java", "React",
+     "Node.js", "PostgreSQL", "MongoDB", "AWS", "Docker", "Git", 
   ];
 
   return (

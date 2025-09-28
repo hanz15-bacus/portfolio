@@ -10,20 +10,20 @@ const Contact = () => {
     {
       icon: Mail,
       label: "Email",
-      value: "john.doe@email.com",
-      href: "mailto:john.doe@email.com"
+      value: "bacushanzchester@gmail.com",
+      href: "mailto:bacushanzchester@gmail.com"
     },
     {
       icon: Phone,
       label: "Phone",
-      value: "+1 (555) 123-4567",
-      href: "tel:+15551234567"
+      value: "0992 402 1076",
+      href: "0992 402 1076"
     },
     {
       icon: MapPin,
       label: "Location",
-      value: "San Francisco, CA",
-      href: "#"
+      value: "Inoburan City of Naga, Cebu, Philippines",
+      href: ""
     }
   ];
 
@@ -121,11 +121,11 @@ const Contact = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="firstName">First Name</Label>
-                    <Input id="firstName" placeholder="John" />
+                    <Input id="firstName" placeholder="First Name" />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="lastName">Last Name</Label>
-                    <Input id="lastName" placeholder="Doe" />
+                    <Input id="lastName" placeholder="Last Name" />
                   </div>
                 </div>
                 
