@@ -10,6 +10,15 @@ import { useState } from "react";
 const Contact = () => {
   const [hoveredContact, setHoveredContact] = useState<number | null>(null);
   const [hoveredSocial, setHoveredSocial] = useState<number | null>(null);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const contactInfo = [
     {
@@ -57,17 +66,51 @@ const Contact = () => {
     }
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Form submitted');
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value
+    });
   };
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+  setSubmitStatus("idle");
+
+  try {
+    const response = await fetch("http://localhost:5000/send-email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...formData,
+      }),
+    });
+
+    if (response.ok) {
+      setSubmitStatus("success");
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
+    } else {
+      throw new Error("Failed to send email");
+    }
+  } catch (error) {
+    console.error("Error sending email:", error);
+    setSubmitStatus("error");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   return (
     <section id="contact" className="py-20 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 relative overflow-hidden">
       {/* Background decorations */}
       <div className="absolute top-20 right-10 w-72 h-72 bg-blue-400/10 rounded-full blur-3xl"></div>
       <div className="absolute bottom-20 left-10 w-96 h-96 bg-purple-400/10 rounded-full blur-3xl"></div>
-
       <div className="container mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-20">
@@ -83,7 +126,6 @@ const Contact = () => {
             or just having a chat about technology and innovation.
           </p>
         </div>
-
         <div className="grid lg:grid-cols-2 gap-16">
           {/* Contact Information */}
           <div className="space-y-8">
@@ -96,7 +138,6 @@ const Contact = () => {
                   </div>
                   <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Let's Connect</h3>
                 </div>
-
                 <p className="text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
                   Whether you're looking for a <span className="text-blue-600 dark:text-blue-400 font-semibold">software engineering intern</span>,
                   want to collaborate on a <span className="text-green-600 dark:text-green-400 font-semibold">exciting project</span>,
@@ -115,7 +156,6 @@ const Contact = () => {
                 </div>
               </CardContent>
             </Card>
-
             {/* Contact Details */}
             <div className="space-y-4">
               <h4 className="text-xl font-bold mb-6 text-slate-900 dark:text-slate-100">Contact Information</h4>
@@ -140,7 +180,6 @@ const Contact = () => {
                           {item.value}
                         </a>
                         <p className="text-sm text-slate-500 dark:text-slate-400">{item.description}</p>
-
                         {/* Progress bar */}
                         <div className="mt-3 h-1 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
                           <div
@@ -155,7 +194,6 @@ const Contact = () => {
                 </Card>
               ))}
             </div>
-
             {/* Social Links */}
             <Card className="border-0 shadow-lg bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm">
               <CardContent className="p-8">
@@ -182,7 +220,6 @@ const Contact = () => {
                           <p className="text-slate-600 dark:text-slate-400 text-sm mb-1">{social.username}</p>
                           <p className="text-xs text-slate-500 dark:text-slate-400">{social.description}</p>
                         </div>
-
                         {/* Progress indicator */}
                         <div className="h-1 w-16 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
                           <div
@@ -198,7 +235,6 @@ const Contact = () => {
               </CardContent>
             </Card>
           </div>
-
           {/* Enhanced Contact Form */}
           <div className="w-full">
             <Card className="border-0 shadow-2xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm overflow-hidden">
@@ -210,9 +246,8 @@ const Contact = () => {
                 </CardTitle>
                 <p className="text-blue-100 mt-2">I'll get back to you within 24 hours</p>
               </div>
-
               <CardContent className="p-6 md:p-8">
-                <div className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="firstName" className="text-slate-900 dark:text-slate-100 font-medium">
@@ -220,6 +255,8 @@ const Contact = () => {
                       </Label>
                       <Input
                         id="firstName"
+                        value={formData.firstName}
+                        onChange={handleInputChange}
                         placeholder="John"
                         className="border-slate-200 dark:border-slate-700 focus:border-blue-500 dark:focus:border-blue-400 transition-colors"
                         required
@@ -231,13 +268,14 @@ const Contact = () => {
                       </Label>
                       <Input
                         id="lastName"
+                        value={formData.lastName}
+                        onChange={handleInputChange}
                         placeholder="Doe"
                         className="border-slate-200 dark:border-slate-700 focus:border-blue-500 dark:focus:border-blue-400 transition-colors"
                         required
                       />
                     </div>
                   </div>
-
                   <div className="space-y-2">
                     <Label htmlFor="email" className="text-slate-900 dark:text-slate-100 font-medium">
                       Email <span className="text-red-500">*</span>
@@ -245,52 +283,78 @@ const Contact = () => {
                     <Input
                       id="email"
                       type="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
                       placeholder="john@example.com"
                       className="border-slate-200 dark:border-slate-700 focus:border-blue-500 dark:focus:border-blue-400 transition-colors"
                       required
                     />
                   </div>
-
                   <div className="space-y-2">
                     <Label htmlFor="subject" className="text-slate-900 dark:text-slate-100 font-medium">
                       Subject <span className="text-red-500">*</span>
                     </Label>
                     <Input
                       id="subject"
+                      value={formData.subject}
+                      onChange={handleInputChange}
                       placeholder="Project collaboration opportunity"
                       className="border-slate-200 dark:border-slate-700 focus:border-blue-500 dark:focus:border-blue-400 transition-colors"
                       required
                     />
                   </div>
-
                   <div className="space-y-2">
                     <Label htmlFor="message" className="text-slate-900 dark:text-slate-100 font-medium">
                       Message <span className="text-red-500">*</span>
                     </Label>
                     <Textarea
                       id="message"
+                      value={formData.message}
+                      onChange={handleInputChange}
                       placeholder="Tell me about your project, opportunity, or just say hello! I'm excited to hear from you..."
                       rows={6}
                       className="border-slate-200 dark:border-slate-700 focus:border-blue-500 dark:focus:border-blue-400 transition-colors resize-none"
                       required
                     />
                   </div>
-
                   <div className="space-y-4">
-                    <Button
-                      type="button"
-                      className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 py-6 text-lg font-semibold group"
-                      onClick={handleSubmit}
-                    >
-                      <Send className="mr-3 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                      Send Message
-                    </Button>
+                    {submitStatus === 'success' && (
+                      <div className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+                        <p className="text-green-800 dark:text-green-200 text-sm font-medium">
+                          ✅ Message sent successfully! I'll get back to you soon.
+                        </p>
+                      </div>
+                    )}
 
+                    {submitStatus === 'error' && (
+                      <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                        <p className="text-red-800 dark:text-red-200 text-sm font-medium">
+                          ❌ Failed to send message. Please try again or contact me directly.
+                        </p>
+                      </div>
+                    )}
+                    <Button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 py-6 text-lg font-semibold group disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <div className="mr-3 h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                          Sending...
+                        </>
+                      ) : (
+                        <>
+                          <Send className="mr-3 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                          Send Message
+                        </>
+                      )}
+                    </Button>
                     <p className="text-center text-xs text-slate-500 dark:text-slate-400">
                       Your information is safe and will never be shared with third parties.
                     </p>
                   </div>
-                </div>
+                </form>
               </CardContent>
             </Card>
           </div>
