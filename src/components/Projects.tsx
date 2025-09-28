@@ -17,10 +17,10 @@ const Projects = () => {
     {
       title: "Machine Learning Classifier",
       description: "Developed a machine learning model to classify images using TensorFlow and Python. Achieved 94% accuracy on validation dataset.",
-      image: "/placeholder.svg",
+      image: "/waste.png",
       technologies: ["Python", "TensorFlow", "scikit-learn", "Jupyter"],
       githubUrl: "#",
-      liveUrl: "#",
+      liveUrl: "waste-management-prediction.vercel.app",
       featured: true
     },
     {
